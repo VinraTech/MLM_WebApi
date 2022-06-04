@@ -1,5 +1,3 @@
-
-
 from lib2to3.pgen2 import token
 from tokenize import group
 
@@ -15,72 +13,77 @@ from django.contrib.auth.models import Group
 from .email import send_forgot_password_mail
 from random import randrange
 
-class RegisterUser(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
-    def post(self, request):
-        serializer = UserSerializer(data=request.data)
+# class RegisterUser(APIView):
+#     # authentication_classes = [TokenAuthentication]
+#     # permission_classes = [IsAuthenticated]
+#     def post(self, request):
+#         serializer = UserSerializer(data=request.data)
 
-        if serializer.is_valid():
-            user = User(
-                email=request.data['email'],
-                # username=request.data['username'],
-                username=request.data['email'],
-                first_name=request.data['first_name'],
-                last_name=request.data['last_name'],
-            )
-            user.set_password(request.data['password'])
-            user.save()
+#         if serializer.is_valid():
+#             user = User(
+#                 email=request.data.get('email'),  
+#                 username=request.data.get('email'),
+#                 first_name=request.data.get('first_name'),
+#                 last_name=request.data.get('last_name'),
+#             )
+#             user.set_password(request.data.get('password')),
+#             user.save()
             
-            if 'groups' in request.data.keys():
-                group=Group.objects.get(id=int(request.data['groups']))
-                user.groups.add(group)
-            else:
-                group=Group.objects.get(name='Staff')
-                user.groups.add(group)
+#             if 'groups' in request.data.keys():
+#                 group=Group.objects.get(id=int(request.data.get('groups')))
+#                 user.groups.add(group)
+#             else:
+#                 group=Group.objects.get(name='Staff')
+#                 user.groups.add(group)
 
-            return Response({'status':'Success','msg':'Registration successful', 'user': serializer.data}, status=status.HTTP_200_OK)
-        else:
-            return Response({"status": "Error", "reason": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+#             return Response({'status':'Success','msg':'Registration successful', 'user': serializer.data}, status=status.HTTP_200_OK)
+#         else:
+#             return Response({"status": "Error", "reason": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegisterCustomer(APIView):
+    authentication_classes = []
+    permission_classes = []
+
     def post(self, request):
-        if request.data['password'] != request.data['confirm_password']:
+        if request.data.get('password') != request.data.get('confirm_password'):
             return Response({"status": "Error", 'reason':'Passwords do not match!'}, status=status.HTTP_400_BAD_REQUEST)
 
         user_serializer = UserSerializer(data={
-            # 'username':request.data['username'],
-            'username':request.data['email'],
-            'email':request.data['email'], 
-            'password':request.data['password'],
+            'username':request.data.get('email'),
+            'email':request.data.get('email'), 
+            'password':request.data.get('password'),
         })
         customer_serializer = CustomerSerializer(data={
-            'nationality':request.data['nationality'],
-            'gender':request.data['gender'],
-            'dob':request.data['dob'],
-            'mobile_no':request.data['mobile_no'],
-            'full_name':request.data['full_name'],
-            'email':request.data['email'],
-            'city':request.data['city'],
-        
+            'nationality':request.data.get('nationality'),
+            'gender':request.data.get('gender'),
+            'dob':request.data.get('dob'),
+            'mobile_no':request.data.get('mobile_no'),
+            'full_name':request.data.get('full_name'),
+            'email':request.data.get('email'),
+            'city':request.data.get('city')
         })
 
-        
-        if user_serializer.is_valid() and customer_serializer.is_valid():
+        user_errors = user_serializer.is_valid()
+        customer_errors = customer_serializer.is_valid()
+
+        if user_errors and customer_errors:
             user_serializer.save()
-            u = User.objects.get(id=user_serializer.data['id'])
-            u.set_password(request.data['password'])
+            u = User.objects.get(id=user_serializer.data.get('id'))
+            u.set_password(request.data.get('password'))
             u.save()
             customer_serializer.save(user=u)
             return Response({'status':'Success','msg':'Registration successful', 'user': user_serializer.data, 'customer':customer_serializer.data}, status=status.HTTP_200_OK)
         else:
-            return Response({"status": "Error: Please Provide Valid and Unique Details"}, status=status.HTTP_400_BAD_REQUEST)
-            # return Response({"status": "Error",  "user_reason":  user_serializer.errors, 'customer_reason':customer_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"status": "Error: Please Provide Valid and Unique Details", "errors":dict(user_serializer.errors, **customer_serializer.errors)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 
 class ForgotPassword(APIView):
+    authentication_classes = []
+    permission_classes = []
+
     def post(self,request):
         email = request.data.get('email', None)
         if Customer.objects.filter(email=email).exists():
@@ -99,6 +102,9 @@ class ForgotPassword(APIView):
 
 
 class ResetPassword(APIView):
+    authentication_classes = []
+    permission_classes = []
+    
     def post(self, request):
         otp = request.data.get('otp', None)
         password = request.data.get('password', None)

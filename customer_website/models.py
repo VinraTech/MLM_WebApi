@@ -1,11 +1,17 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
 
-class ProductColours(models.Model):
-    colour_name = models.CharField(max_length=20)
+class ProductImages(models.Model):
+    image = models.ImageField(upload_to="images/products/")
+
+class ProductColors(models.Model):
+    color_name = models.CharField(max_length=20)
+    hax_value = models.CharField(max_length=20,null=True, blank=True)
+
     def __str__(self):
-        return self.colour_name
+        return self.color_name
 
 class SubCategories(models.Model):
     sub_category = models.CharField(max_length=20)
@@ -15,42 +21,33 @@ class SubCategories(models.Model):
 
 class Categories(models.Model):
     category = models.CharField(max_length=20)
-    sub_category = models.ForeignKey(SubCategories, on_delete=models.CASCADE)
+    sub_category = models.ManyToManyField(SubCategories)
 
     def __str__(self):
         return self.category
 
-class Review(models.Model):
-    rating = models.FloatField()
-    message = models.TextField()
-
-# COLOR_CHOICES = (
-#     ('GREEN','GREEN'),
-#     ('YELLOW','YELLOW'),
-#     ('BLUE','BLUE'),
-#     ('RED','RED'),
-# )
-
-# CATEGORIES_CHOICES = (
-#     ('BOTTOM','BOTTOM'),
-#     ('FOOTWEAR','FOOTWAER'),
-#     ('JEANS','JEANS'),
-# )
-
 class Product(models.Model):
-    product_id = models.PositiveBigIntegerField()     ##### id or integer field
+    product_id = models.PositiveBigIntegerField()
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Categories, on_delete=models.CASCADE)
-    # category = models.CharField(max_length=100,choices=CATEGORIES_CHOICES) ####
     description = models.CharField(max_length=100)
-    quantity = models.IntegerField()   ##### should be on cart
-    colour = models.ForeignKey(ProductColours, on_delete=models.CASCADE)
-    # colour = models.CharField(max_length=100, choices=COLOR_CHOICES)####
-    price = models.IntegerField()
-    discounted_price = models.IntegerField()
-    image = models.ImageField()
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
-
+    price = models.FloatField()
+    discounted_price = models.FloatField()
+    colors = models.ManyToManyField(ProductColors)
+    images = models.ManyToManyField(ProductImages)
 
     def __str__(self):
         return self.name
+        
+
+class ProductReview(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.FloatField()
+    message = models.TextField()
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    added_on = models.DateTimeField(auto_now_add=True)
