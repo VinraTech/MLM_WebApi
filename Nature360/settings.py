@@ -161,3 +161,11 @@ EMAIL_HOST_PASSWORD = 'Prashant@123456'
 # Pop: mail.vinratech.com
 
 AUTH_KEY = 'fda0877ca2ae452e52e0293fcfaadd555f2f8783'
+
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:8080",
+    "http://127.0.0.1:9000",
+]
+CORS_ALLOW_ALL_ORIGINS: True
