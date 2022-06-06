@@ -41,7 +41,8 @@ class RegisterReseller(APIView):
         customer_errors = reseller_serializer.is_valid()
 
         if user_errors and customer_errors:
-            user_serializer.save(is_active=False)
+            #user_serializer.save(is_active=False)
+            user_serializer.save()
             u = User.objects.get(id=user_serializer.data.get('id'))
             u.set_password(request.data.get('password'))
             u.save()
