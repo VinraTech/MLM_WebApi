@@ -11,6 +11,19 @@ SELECT_GENDER=(
     ('FEMALE','FEMALE')
 )
 
+class CustomerAddress(models.Model):
+    is_primary = models.BooleanField(default=False)
+    address_line_1 = models.CharField(max_length=200)
+    address_line_2 = models.CharField(max_length=200)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    pincode = models.CharField(max_length=100)
+    mobile_no = models.BigIntegerField()
+
+    def __str__(self):
+        return "{0}, {1}, {2}, {3}".format(self.address_line_1, self.address_line_2, self.city, self.pincode)
+
+
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     nationality = models.ForeignKey(Country, on_delete=models.CASCADE)
@@ -20,7 +33,8 @@ class Customer(models.Model):
     full_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     city = models.CharField(max_length=20, null=True)
-
+    addresses = models.ManyToManyField(CustomerAddress)
+    
     def __str__(self):
         return self.full_name
 
