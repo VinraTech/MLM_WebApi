@@ -100,10 +100,10 @@ class ProductsAPI(APIView):
             if request.data.getlist('colors'):
                 for x in request.data.getlist('colors'):
                     if ProductColors.objects.filter(color_name=x).exists():
-                        pI = ProductColors.objects.filter(color_name=x).first()
+                        pc = ProductColors.objects.filter(color_name=x).first()
                     else:
-                        pI = ProductColors.objects.create(color_name=x)
-                    product.colors.add(pI)
+                        pc = ProductColors.objects.create(color_name=x)
+                    product.colors.add(pc)
 
             if request.FILES.getlist('images'):
                 for x in request.FILES.getlist('images'):
