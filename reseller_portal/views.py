@@ -17,8 +17,8 @@ def send_otp(mobile=None,otp=None):
     #                                 from_='+14405381381',
     #                                 to='+919759525301'
     #                             )
-    print('Your otp is:', otp)
-    print('Your mobile is:', mobile)
+    #print('Your otp is:', otp)
+    #print('Your mobile is:', mobile)
     return True
 
 
