@@ -13,6 +13,18 @@ from django.contrib.auth.models import Group
 from .email import send_forgot_password_mail
 from random import randrange
 
+
+
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+
+class CustomObtainAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
+        token = Token.objects.get(key=response.data['token'])
+        user_obj = UserSerializer(User.objects.get(id=token.user_id), many=False).data
+        return Response({'token': token.key, 'user': user_obj})
+
 # class RegisterUser(APIView):
 #     # authentication_classes = [TokenAuthentication]
 #     # permission_classes = [IsAuthenticated]
@@ -49,10 +61,17 @@ class RegisterCustomer(APIView):
         if request.data.get('password') != request.data.get('confirm_password'):
             return Response({"status": "Error", 'reason':'Passwords do not match!'}, status=status.HTTP_400_BAD_REQUEST)
 
+        fullname = request.data.get('full_name')
+        firstname = fullname.strip().split(' ')[0]
+        lastname = ' '.join((fullname + ' ').split(' ')[1:]).strip()
+
         user_serializer = UserSerializer(data={
             'username':request.data.get('email'),
             'email':request.data.get('email'), 
             'password':request.data.get('password'),
+            'first_name':firstname,
+            'last_name':lastname,
+
         })
         customer_serializer = CustomerSerializer(data={
             'nationality':request.data.get('nationality'),

@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'customer_website',
-    'corsheaders',
     'reseller_portal',
+    'corsheaders',
+    'management_portal',
     
 ]
 

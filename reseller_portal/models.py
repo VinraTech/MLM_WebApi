@@ -34,3 +34,5 @@ class Reseller(models.Model):
     full_name = models.CharField(max_length=50)
     address_doc_type = models.CharField(max_length=50, choices=ADDR_DOC_TYPE_CHOICES, null=True, blank=True)
     address_doc_no = models.BigIntegerField(null=True, blank=True)
+    is_approved = models.BooleanField(default=False)
+    referrer = models.IntegerField(null=True,blank=True)
