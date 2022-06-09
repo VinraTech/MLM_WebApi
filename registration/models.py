@@ -26,14 +26,14 @@ class CustomerAddress(models.Model):
 
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    nationality = models.ForeignKey(Country, on_delete=models.CASCADE)
-    gender = models.CharField(max_length=10, choices=SELECT_GENDER)
-    dob = models.DateField()
+    nationality = models.ForeignKey(Country, on_delete=models.CASCADE,null=True,blank=True)
+    gender = models.CharField(max_length=10, choices=SELECT_GENDER,null=True,blank=True)
+    dob = models.DateField(null=True,blank=True)
     mobile_no = models.BigIntegerField()
     full_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
-    city = models.CharField(max_length=20, null=True)
-    addresses = models.ManyToManyField(CustomerAddress)
+    city = models.CharField(max_length=20, null=True,blank=True)
+    addresses = models.ManyToManyField(CustomerAddress,null=True,blank=True)
     
     def __str__(self):
         return self.full_name
