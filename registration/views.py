@@ -58,9 +58,10 @@ class RegisterCustomer(APIView):
     permission_classes = []
 
     def post(self, request):
-        if request.data.get('password') != request.data.get('confirm_password'):
-            return Response({"status": "Error", 'reason':'Passwords do not match!'}, status=status.HTTP_400_BAD_REQUEST)
-
+        # if request.data.get('password') != request.data.get('confirm_password'):
+        #     return Response({"status": "Error", 'reason':'Passwords do not match!'}, status=status.HTTP_400_BAD_REQUEST)
+        if not request.data.get('full_name'):
+            return Response({'status':'Error','reason':'Please Enter fullname!'})
         fullname = request.data.get('full_name')
         firstname = fullname.strip().split(' ')[0]
         lastname = ' '.join((fullname + ' ').split(' ')[1:]).strip()
