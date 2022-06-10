@@ -33,14 +33,17 @@ class Customer(models.Model):
     full_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     city = models.CharField(max_length=20, null=True,blank=True)
-    addresses = models.ManyToManyField(CustomerAddress,null=True,blank=True)
+    addresses = models.ManyToManyField(CustomerAddress,blank=True)
+    is_approved = models.BooleanField(default=False)
+    referrer = models.IntegerField(null=True,blank=True)
     
     def __str__(self):
         return self.full_name
 
 class ResetPasswordOTP(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    otp = models.IntegerField()
+    otp = models.IntegerField(null=True,blank=True)
+    token = models.CharField(max_length=100)
     generated_on = models.DateTimeField(auto_now_add=True)
     expired_on = models.DateTimeField(null=True)
     
