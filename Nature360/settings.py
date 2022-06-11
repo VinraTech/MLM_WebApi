@@ -112,6 +112,18 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'registration.validators.UppercaseValidator',
+    },
+    {
+        'NAME': 'registration.validators.LowercaseValidator',
+    },
+    {
+        'NAME': 'registration.validators.NumberValidator',
+    },
+    {
+        'NAME': 'registration.validators.SpecialCharacterValidator',
+    },
 ]
 
 
@@ -131,6 +143,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'images/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -155,6 +168,8 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = 'prashant@vinratech.com'
 EMAIL_HOST_PASSWORD = 'Prashant@123456'
 
+# EMAIL_BACKEND = 'django_ses.SESBackend'
+
 # prashant@vinratech.com
 # SMTP: mail.vinratech.com
 # SSL Port: 465
@@ -169,4 +184,16 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:9000",
 ]
-CORS_ALLOW_ALL_ORIGINS: True
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+       'http://3.82.226.195',
+)
+CORS_ALLOW_METHODS = [
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',
+]
