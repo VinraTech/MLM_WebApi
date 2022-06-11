@@ -161,14 +161,18 @@ REST_FRAMEWORK = {
 }
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django_ses.SESBackend' #### FOR AWS
 EMAIL_HOST = 'mail.vinratech.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 25
 EMAIL_HOST_USER = 'prashant@vinratech.com'
 EMAIL_HOST_PASSWORD = 'Prashant@123456'
 
-# EMAIL_BACKEND = 'django_ses.SESBackend'
+### AWS SES DETAILS
+# AWS_SES_REGION = 'region US-EAST-1'
+AWS_ACCESS_KEY_ID = 'AKIAVHN47ACP234DMFXI'
+AWS_SECRET_ACCESS_KEY = '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'
 
 # prashant@vinratech.com
 # SMTP: mail.vinratech.com

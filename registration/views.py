@@ -12,6 +12,18 @@ from django.contrib.auth.models import Group
 from .email import send_forgot_password_mail
 from random import randrange
 
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+
+import django.contrib.auth.password_validation as validators
+from django.core.exceptions import ValidationError
+from django.contrib.auth.hashers import check_password
+from .validators import GenerateCustomerID
+
+import uuid
+import datetime 
+
+import pytz
 
 # class RegisterUser(APIView):
 #     # authentication_classes = [TokenAuthentication]
@@ -40,22 +52,6 @@ from random import randrange
 #         else:
 #             return Response({"status": "Error", "reason": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
-
-class CustomObtainAuthToken(ObtainAuthToken):
-    def post(self, request, *args, **kwargs):
-        response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
-        token = Token.objects.get(key=response.data['token'])
-        user_obj = UserSerializer(User.objects.get(id=token.user_id), many=False).data
-        return Response({'token': token.key, 'user': user_obj})
-
-
-import django.contrib.auth.password_validation as validators
-from django.core.exceptions import ValidationError
-from django.contrib.auth.hashers import check_password
-
 def ValidateNewPassword(password, confirm_password=None):
     validations = dict()
     if confirm_password and password != confirm_password:
@@ -68,7 +64,12 @@ def ValidateNewPassword(password, confirm_password=None):
         validations['password'] = e.messages
     return validations
 
-
+class CustomObtainAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        response = super(CustomObtainAuthToken, self).post(request, *args, **kwargs)
+        token = Token.objects.get(key=response.data['token'])
+        user_obj = UserSerializer(User.objects.get(id=token.user_id), many=False).data
+        return Response({'token': token.key, 'user': user_obj})
 
 class RegisterCustomer(APIView):
     authentication_classes = []
@@ -118,6 +119,7 @@ class RegisterCustomer(APIView):
 
         })
         customer_serializer = CustomerSerializer(data={
+            'customer_id':GenerateCustomerID(),
             'nationality':request.data.get('nationality'),
             'gender':request.data.get('gender'),
             'dob':request.data.get('dob'),
@@ -147,8 +149,6 @@ class RegisterCustomer(APIView):
         else:
             return Response({"status": "Error: Please Provide Valid and Unique Details", "errors":dict(user_serializer.errors, **customer_serializer.errors)}, status=status.HTTP_400_BAD_REQUEST)
 
-
-
 class VerifyOtpCustomer(APIView):
     authentication_classes = []
     permission_classes = []
@@ -171,10 +171,6 @@ class VerifyOtpCustomer(APIView):
         else:
             return Response({"status": "Error", 'reason':'Please enter correct username!'}, status=status.HTTP_400_BAD_REQUEST)
 
-
-import uuid
-import datetime 
-
 class ForgotPassword(APIView):
     authentication_classes = []
     permission_classes = []
@@ -195,9 +191,6 @@ class ForgotPassword(APIView):
             return Response({"status": "Link sent on email successfully"}, status=status.HTTP_200_OK)
         else:
             return Response({"status": "Error", 'reason':'Email not registered!'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-import pytz
 
 class ResetPasswordToken(APIView):
     authentication_classes = []
@@ -238,9 +231,6 @@ class ResetPasswordToken(APIView):
             return Response({'status':'Success','reason':'Password changed successfully!'}, status=status.HTTP_200_OK)
         else:
             return Response({'status':'Error', 'reason':'Please enter correct OTP!'}, status=status.HTTP_400_BAD_REQUEST)
-
-
-
 
 class ChangePassword(APIView):
     def post(self, request):
