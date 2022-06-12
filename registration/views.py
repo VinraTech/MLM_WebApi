@@ -9,7 +9,7 @@ from .models import *
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import Group
-from .email import send_forgot_password_mail
+#from .email import send_forgot_password_mail
 from random import randrange
 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -180,7 +180,7 @@ class ForgotPassword(APIView):
         if Customer.objects.filter(email=email).exists():
             customer_obj = Customer.objects.get(email=email)
             token = uuid.uuid4()
-            send_forgot_password_mail(customer_obj.email, token)
+            # send_forgot_password_mail(customer_obj.email, token)
 
             expired_time = datetime.datetime.now() + datetime.timedelta(hours=24)
             rp_obj = ResetPasswordOTP.objects.create(user=customer_obj.user, token=token, expired_on=expired_time)
