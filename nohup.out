@@ -1,0 +1,87 @@
+Traceback (most recent call last):
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/core/management/base.py", line 354, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/core/management/commands/runserver.py", line 61, in execute
+    super().execute(*args, **options)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/core/management/base.py", line 398, in execute
+    output = self.handle(*args, **options)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/core/management/commands/runserver.py", line 68, in handle
+    if not settings.DEBUG and not settings.ALLOWED_HOSTS:
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/conf/__init__.py", line 82, in __getattr__
+    self._setup(name)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/conf/__init__.py", line 69, in _setup
+    self._wrapped = Settings(settings_module)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/conf/__init__.py", line 170, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 992, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/Nature360/__init__.py", line 1, in <module>
+    import pymysql
+ModuleNotFoundError: No module named 'pymysql'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/manage.py", line 22, in <module>
+    main()
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/manage.py", line 18, in main
+    execute_from_command_line(sys.argv)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/core/management/__init__.py", line 419, in execute_from_command_line
+    utility.execute()
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/core/management/__init__.py", line 413, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/core/management/base.py", line 367, in run_from_argv
+    connections.close_all()
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/db/utils.py", line 208, in close_all
+    for alias in self:
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/utils/connection.py", line 73, in __iter__
+    return iter(self.settings)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/utils/connection.py", line 45, in settings
+    self._settings = self.configure_settings(self._settings)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/db/utils.py", line 144, in configure_settings
+    databases = super().configure_settings(databases)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/utils/connection.py", line 50, in configure_settings
+    settings = getattr(django_settings, self.settings_name)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/conf/__init__.py", line 82, in __getattr__
+    self._setup(name)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/conf/__init__.py", line 69, in _setup
+    self._wrapped = Settings(settings_module)
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/env/lib/python3.10/site-packages/django/conf/__init__.py", line 170, in __init__
+    mod = importlib.import_module(self.SETTINGS_MODULE)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 992, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/mnt/volume-nyc1-01/html/MLM_WebApi/Nature360/__init__.py", line 1, in <module>
+    import pymysql
+ModuleNotFoundError: No module named 'pymysql'
+Error: That port is already in use.
+[10/Jun/2022 19:20:34] "POST /login/ HTTP/1.0" 400 68
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 10, 2022 - 19:20:29
+Django version 3.2.13, using settings 'Nature360.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Error: That port is already in use.

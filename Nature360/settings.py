@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-87#=cxhvtve*y5@)_mx^r5fs2o8s&-_s#ux)mf^%g0gxdc09as'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -88,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'nature360',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
+        'USER': 'nature360',
+        'PASSWORD': 'nature360',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -142,8 +142,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+#STATIC_URL = 'static/'
 STATIC_URL = 'static/'
-STATIC_ROOT = 'images/'
+STATIC_ROOT = '/mnt/volume-nyc1-01/html/MLM_WebApi/images/'
+# Note: Replace 'supersecure.codes' with your domain
+#STATIC_ROOT = "/mnt/volume-nyc1-01/html/MLM_WebApi/static"
+#STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -187,6 +191,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://sub.example.com",
     "http://localhost:8080",
     "http://127.0.0.1:9000",
+    "http://3.82.226.195",
+    'http://localhost:3000'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
