@@ -112,6 +112,18 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'registration.validators.UppercaseValidator',
+    },
+    {
+        'NAME': 'registration.validators.LowercaseValidator',
+    },
+    {
+        'NAME': 'registration.validators.NumberValidator',
+    },
+    {
+        'NAME': 'registration.validators.SpecialCharacterValidator',
+    },
 ]
 
 
@@ -153,12 +165,18 @@ REST_FRAMEWORK = {
 }
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django_ses.SESBackend' #### FOR AWS
 EMAIL_HOST = 'mail.vinratech.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 25
 EMAIL_HOST_USER = 'prashant@vinratech.com'
 EMAIL_HOST_PASSWORD = 'Prashant@123456'
+
+### AWS SES DETAILS
+# AWS_SES_REGION = 'region US-EAST-1'
+AWS_ACCESS_KEY_ID = 'AKIAVHN47ACP234DMFXI'
+AWS_SECRET_ACCESS_KEY = 'FOehL6IZPZ56ItqpxCgB/qLaW6YKz2jS6kThz042'
 
 # prashant@vinratech.com
 # SMTP: mail.vinratech.com
@@ -173,6 +191,19 @@ CORS_ALLOWED_ORIGINS = [
     "https://sub.example.com",
     "http://localhost:8080",
     "http://127.0.0.1:9000",
-    "http://3.82.226.195"
+    "http://3.82.226.195",
+    'http://localhost:3000'
 ]
-CORS_ALLOW_ALL_ORIGINS: True
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+       'http://3.82.226.195',
+)
+CORS_ALLOW_METHODS = [
+'DELETE',
+'GET',
+'OPTIONS',
+'PATCH',
+'POST',
+'PUT',
+]

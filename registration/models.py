@@ -36,6 +36,7 @@ class Customer(models.Model):
     addresses = models.ManyToManyField(CustomerAddress,blank=True)
     is_approved = models.BooleanField(default=False)
     referrer = models.IntegerField(null=True,blank=True)
+    customer_id = models.CharField(max_length=50, unique=True, null=True, blank=True)
     
     def __str__(self):
         return self.full_name
