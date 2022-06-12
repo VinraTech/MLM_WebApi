@@ -230,7 +230,7 @@ class ResetPasswordToken(APIView):
             ResetPasswordOTP.objects.filter(user=user).last().delete()
             return Response({'status':'Success','reason':'Password changed successfully!'}, status=status.HTTP_200_OK)
         else:
-            return Response({'status':'Error', 'reason':'Please enter correct OTP!'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'status':'Error', 'reason':'Please enter correct username!'}, status=status.HTTP_400_BAD_REQUEST)
 
 class ChangePassword(APIView):
     def post(self, request):
