@@ -77,16 +77,17 @@ class RegisterCustomer(APIView):
 
     def get(self, request):
         is_approved = request.GET.get('is_approved', None)
+        filter_column = request.GET.get('filter', '-updated_at')
 
         if is_approved not in ['True', 'False', 'true', 'false', None]:
             return Response({'status':'Error', 'msg':'Please send correct filter value!'})
     
         if is_approved is not None:
             ia = is_approved.capitalize()
-            qs = Customer.objects.filter(is_approved=ia)
+            qs = Customer.objects.filter(is_approved=ia).order_by('-updated_at')[:20]
             serializer = CustomerSerializer(qs, many=True)
         else:
-            qs = Customer.objects.all()
+            qs = Customer.objects.all().order_by(filter_column)
             serializer = CustomerSerializer(qs, many=True)
 
         if request.GET.get('id'):
@@ -123,6 +124,9 @@ class RegisterCustomer(APIView):
             'nationality':request.data.get('nationality'),
             'gender':request.data.get('gender'),
             'dob':request.data.get('dob'),
+            'day':request.data.get('day'),
+            'month':request.data.get('month'),
+            'year':request.data.get('year'),
             'mobile_no':request.data.get('mobile_no'),
             'full_name':request.data.get('full_name'),
             'email':request.data.get('email'),

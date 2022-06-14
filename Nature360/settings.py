@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-87#=cxhvtve*y5@)_mx^r5fs2o8s&-_s#ux)mf^%g0gxdc09as
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+# DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -94,6 +95,17 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+# DATABASES = {                  
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'nature360',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation
