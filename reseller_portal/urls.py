@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import DemoApi # RegisterReseller,VerifyOtpReseller #,ForgotPasswordReseller,
+from .views import *
 # from .views import send_otp
 urlpatterns = [
     # path('register_reseller/', RegisterReseller.as_view()),
