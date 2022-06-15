@@ -204,12 +204,14 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:9000",
     "http://3.82.226.195",
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'http://mgmtportal.s3-website-us-east-1.amazonaws.com'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
        'http://3.82.226.195',
+       'http://mgmtportal.s3-website-us-east-1.amazonaws.com'
 )
 CORS_ALLOW_METHODS = [
 'DELETE',

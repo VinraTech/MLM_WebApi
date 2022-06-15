@@ -229,6 +229,9 @@ class ResetPasswordToken(APIView):
             return Response({'status':'Error', 'reason':'Passwords do not match!'})
 
         if ResetPasswordOTP.objects.filter(user=user).exists():
+            pwd_errors = ValidateNewPassword(password, confirm_password)
+            if pwd_errors:
+                return Response({"status": "Error", "errors":pwd_errors}, status=status.HTTP_400_BAD_REQUEST)
             user.set_password(password)
             user.save()
             ResetPasswordOTP.objects.filter(user=user).last().delete()
